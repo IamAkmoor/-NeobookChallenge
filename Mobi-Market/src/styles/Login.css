@@ -28,16 +28,28 @@
 
 .login__form-input {
     width: 300px;
+    font-weight: 400;
     color: rgba(192, 192, 192, 1);
     margin-bottom: 20px !important; 
 }
-/* 
-#password {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: flex-start;
-} */
-/* #standard-password-input, #standard-basic {
+
+.login__input-button {
+    color: white;
     font-size: 16px;
-} */
+    font-weight: 600;
+    margin-top: 2rem ;
+    border-radius: 2rem ;
+    width: 300px;
+    background: rgba(192, 192, 192, 1);
+}
+
+
+
+.login__signUp {
+    margin-top: 7rem;
+}
+
+.login__link {
+    font-size: 14px;
+    margin-top: 10px;
+}
