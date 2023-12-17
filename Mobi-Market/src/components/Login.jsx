@@ -10,16 +10,10 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 export default function Login() {
   const [showPassword, setShowPassword] = React.useState(false);
-  const [signIn, setSignIn] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleFilledInput = () => 
 
   return (
-    <div className="login">
-      <div className="login__container">
-        <div className="login__container-logo">
-        </div>
         <div className="login__container-form">
           <FormControl variant="standard" className="login__form-input">
             <TextField
@@ -44,8 +38,8 @@ export default function Login() {
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
                   >
-                    {showPassword ? <VisibilityOff /> : <Visibility 
-                    sx={{ color:"#5458EA"}} />}
+                    {showPassword ? <Visibility 
+                    sx={{ color:"#5458EA"}} /> :<VisibilityOff /> }
                   </IconButton>
                 </InputAdornment>
               }
@@ -60,7 +54,5 @@ export default function Login() {
             <a className="login__link" href="#">Зарегистрироваться</a>
           </div>
         </div>
-      </div>
-    </div>
   );
 }
