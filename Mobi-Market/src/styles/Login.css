@@ -19,11 +19,16 @@
     font-weight: 600;
     margin-top: 2rem ;
     border-radius: 2rem ;
-    width: 300px;
-    background: rgba(192, 192, 192, 1);
+    width: 300px;  
 }
 
+.login__button-valid {
+    background-color: rgba(84, 88, 234, 1);
+}
 
+.login__button-invalid {
+    background-color: rgba(192, 192, 192, 1);
+}
 
 .login__signUp {
     margin-top: 7rem;

@@ -13,7 +13,7 @@ function App() {
         <div className="login">
           <div className="login__container">
             <SidebarBackground/>
-            <SignUp/>
+            <Login/>
             
         </div>
         </div>
