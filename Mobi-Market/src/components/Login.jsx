@@ -33,7 +33,7 @@ export default function Login() {
 
   const handleLogin = () => {
     console.log(loginUser)
-    axios.post('https://neobook.online/mobi-market/users/login/', {loginUser})
+    axios.post('https://neobook.online/mobi-market/users/login/', loginUser)
     .then(response => console.log(response))
     .catch(err => console.err(err))
   }
