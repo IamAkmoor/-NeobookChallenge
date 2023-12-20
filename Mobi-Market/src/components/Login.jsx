@@ -2,6 +2,7 @@ import "../styles/Login.css";
 import { TextField, FormControl } from "@mui/material";
 import Input from "@mui/material/Input";
 import React from "react";
+import axios from 'axios'
 import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -10,27 +11,31 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 export default function Login() {
   const [showPassword, setShowPassword] = React.useState(false);
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [loginUser, setLoginUser] = React.useState({
+    username: '',
+    password: ''
+  })
   const [isFormValid, setIsFormValid] = React.useState(false);
-  
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleUsernameChange = (e) => 
-  {
-    setUsername(e.target.value);
-    updateFormValidity(e.target.value, password)
-};
-  const handlePasswordChange = (e) => 
-  {
-    setPassword(e.target.value);
-    updateFormValidity(username, e.target.value)
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setLoginUser((prevUser) => ({
+      ...prevUser,
+      [name]: value
+    }));
+    updateFormValidity(name === 'username' ? value : loginUser.username, name === 'password' ? value : loginUser.password);
   };
 
-  const updateFormValidity = (newUsername, newPassword) => 
-  {setIsFormValid(newUsername.trim() !== '' && newPassword.trim() !== '')}
+  const updateFormValidity = (newUsername, newPassword) => {
+    setIsFormValid(newUsername.trim() !== '' && newPassword.trim() !== '');
+  }
 
   const handleLogin = () => {
-    console.log("logining", username ,password)
+    console.log(loginUser)
+    axios.post('https://neobook.online/mobi-market/users/login/', {loginUser})
+    .then(response => console.log(response))
+    .catch(err => console.err(err))
   }
 
   return (
@@ -40,8 +45,9 @@ export default function Login() {
               id="standard-basic"
               label="Имя пользователя"
               variant="standard"
-              value={username}
-              onChange={handleUsernameChange}
+              name="username"
+              value={loginUser.username}
+              onChange={handleInputChange}
             />
           </FormControl>
           <FormControl variant="standard" className="login__form-input">
@@ -52,8 +58,9 @@ export default function Login() {
             </InputLabel>
             <Input
               id="standard-adornment-password"
-              value={password}
-              onChange={handlePasswordChange}
+              name="password"
+              value={loginUser.password}
+              onChange={handleInputChange}
               type={showPassword ? "text" : "password"}
               endAdornment={
                 <InputAdornment position="end">
