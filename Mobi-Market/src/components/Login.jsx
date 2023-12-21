@@ -1,11 +1,7 @@
 import "../styles/Login.css";
-import { TextField, FormControl } from "@mui/material";
-import Input from "@mui/material/Input";
+import { Input, TextField, FormControl, IconButton, InputLabel, InputAdornment, Alert } from "@mui/material";
 import React from "react";
 import axios from 'axios'
-import IconButton from "@mui/material/IconButton";
-import InputLabel from "@mui/material/InputLabel";
-import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
@@ -16,6 +12,7 @@ export default function Login() {
     password: ''
   })
   const [isFormValid, setIsFormValid] = React.useState(false);
+  const [showErrorMess, setShowErrMess] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleInputChange = (e) => {
@@ -35,11 +32,25 @@ export default function Login() {
     console.log(loginUser)
     axios.post('https://neobook.online/mobi-market/users/login/', loginUser)
     .then(response => console.log(response))
-    .catch(err => console.err(err))
+    .catch(err => {
+      if(err.response){
+        console.error("server reponded with error status:", err.response.status);
+        if(err.response.status === 404) {
+          setShowErrMess(true)
+        }
+      }
+    })
   }
 
   return (
         <div className="login__container-form">
+          {showErrorMess &&
+            <div className="login__error">
+            <Alert variant="filled" severity="error" className="error-color">
+              Неверный логин или пароль
+            </Alert>
+          </div>
+          }
           <FormControl variant="standard" className="login__form-input">
             <TextField
               id="standard-basic"

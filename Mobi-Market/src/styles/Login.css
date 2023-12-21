@@ -1,3 +1,12 @@
+.login__error {
+    position: absolute;
+    top: 2rem;
+}
+
+.error-color {
+    background-color: rgba(243, 69, 69, 1) !important;
+}
+
 .login__container-form {
     display: flex;
     flex: 0.5;
@@ -10,7 +19,7 @@
     width: 300px;
     font-weight: 400;
     color: rgba(192, 192, 192, 1);
-    margin-bottom: 20px !important; 
+    margin-bottom: 1.5rem !important; 
 }
 
 .login__input-button {
@@ -36,5 +45,5 @@
 
 .login__link {
     font-size: 14px;
-    margin-top: 10px;
+    margin-top: 1rem;
 }
