@@ -1,5 +1,5 @@
 import { FormControl, Input, InputLabel } from "@mui/material";
-import "../styles/SignUp.css";
+import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded';import "../styles/SignUp.css";
 import { useFormik } from 'formik';
 
 
@@ -14,30 +14,38 @@ export default function SignUp() {
     }
   })
     return (
-        <>
+        <div className="right-container">
           <div className="signup__header">
-              <h4>Регистрация</h4>
+            <div className="back-button">
+              <div className="icon">
+                <KeyboardBackspaceRoundedIcon className="back-icon"/>
+              </div>
+              <div className="text">
+                  Назад 
+              </div>
+            </div>
+            <div className="signup-text">
+              Регистрация
+            </div>
           </div>
-        <form className="login__container-form">
-          <FormControl variant="standard" className="form-container">
-            <InputLabel htmlFor="standard-adornment">
-              Имя пользователя
-            </InputLabel>
-            <Input />
-          </FormControl>
-          <FormControl variant="standard"  className="form-container">
-            <InputLabel htmlFor="standard-adornment">
-              Почта
-            </InputLabel>
-            <Input/>
-          </FormControl>
-          <button className="login__input-button">
-            Далее 
-          </button>
-        </form>
-
-       
-        </>
+          <form className="signup__container-form ">
+            <FormControl variant="standard" className="form-container">
+              <InputLabel htmlFor="standard-adornment">
+                Имя пользователя
+              </InputLabel>
+              <Input />
+            </FormControl>
+            <FormControl variant="standard"  className="form-container">
+              <InputLabel htmlFor="standard-adornment">
+                Почта
+              </InputLabel>
+              <Input/>
+            </FormControl>
+            <button className="submit-button">
+              Далее 
+            </button>
+          </form>
+        </div>
         
     )
 }
