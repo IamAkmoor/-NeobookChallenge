@@ -29,21 +29,23 @@ export default function SignUp() {
             </div>
           </div>
           <form className="signup__container-form ">
-            <FormControl variant="standard" className="form-container">
-              <InputLabel htmlFor="standard-adornment">
-                Имя пользователя
-              </InputLabel>
-              <Input />
-            </FormControl>
-            <FormControl variant="standard"  className="form-container">
-              <InputLabel htmlFor="standard-adornment">
-                Почта
-              </InputLabel>
-              <Input/>
-            </FormControl>
-            <button className="submit-button">
-              Далее 
-            </button>
+            <div className="container-content">
+              <FormControl variant="standard" className="form-container">
+                <InputLabel htmlFor="standard-adornment">
+                  Имя пользователя
+                </InputLabel>
+                <Input />
+              </FormControl>
+              <FormControl variant="standard"  className="form-container">
+                <InputLabel htmlFor="standard-adornment">
+                  Почта
+                </InputLabel>
+                <Input/>
+              </FormControl>
+              <button className="submit-button">
+                Далее 
+              </button>
+            </div>
           </form>
         </div>
         
