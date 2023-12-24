@@ -69,15 +69,13 @@
 
 .submit-button {
     color: white;
-    background-color: rgba(192, 192, 192, 1);
     margin-top: 52px;
 }
 
-/* 
+.button-valid {
+    background-color: rgba(84, 88, 234, 1);
+}
 
- width: 300px;
-    margin-bottom: 1.5rem !important;
-    box-sizing: border-box;
-
-
-*/
+.button-invalid {   
+    background-color: rgba(192, 192, 192, 1);
+}
