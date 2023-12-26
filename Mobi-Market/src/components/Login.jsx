@@ -24,31 +24,17 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [showErrorMess, setShowErrMess] = useState(false);
 
-  const handleClickShowPassword = () => {
-    console.log("work");
-    setShowPassword((show) => !show);
-  };
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setLoginUser((prevUser) => ({
-  //     ...prevUser,
-  //     [name]: value,
-  //   }));
-  //   updateFormValidity(
-  //     name === "username" ? value : loginUser.username,
-  //     name === "password" ? value : loginUser.password
-  //   );
-  // };
-
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  
   const isFormValid =
     formik.values.username.trim() !== "" &&
     formik.values.password.trim() !== "";
 
-  const handleLogin = () => {
-    console.log(loginUser);
+  const handleLogin = (e) => {
+    e.preventDefault()
+    console.log(formik.values);
     axios
-      .post("https://neobook.online/mobi-market/users/login/", loginUser)
+      .post("https://neobook.online/mobi-market/users/login/", formik.values)
       .then((response) => console.log(response))
       .catch((err) => {
         if (err.response) {
@@ -58,6 +44,9 @@ export default function Login() {
           );
           if (err.response.status === 404) {
             setShowErrMess(true);
+            setTimeout(() => {
+              setShowErrMess(false)
+            }, 3000);
           }
         }
       });
@@ -72,8 +61,8 @@ export default function Login() {
           </Alert>
         </div>
       )}
-      <div className="container-content">
-        <form className="container-form" onSubmit={formik.handleSubmit}>
+      <div className="login__container-content">
+        <form className="container-form" onSubmit={handleLogin}>
           <TextField
             className="form-container"
             id="username"
@@ -90,6 +79,7 @@ export default function Login() {
             </InputLabel>
             <Input
               id="standard-adornment-password"
+              type={showPassword ? "text" : "password"}
               name="password"
               value={formik.values.password}
               onChange={formik.handleChange}
@@ -114,7 +104,7 @@ export default function Login() {
             </a>
           </FormControl>
           <button
-            className={`submit-button ${
+            className={`login__submit-button ${
               isFormValid ? "button-valid" : "button-invalid"
             }`}
             disabled={!isFormValid}
@@ -122,12 +112,20 @@ export default function Login() {
             Войти
           </button>
         </form>
-        {/* <div className="login__signUp">
+        <div className="login__signUp">
           <a className="login__link" href="#">
             Зарегистрироваться
           </a>
-        </div> */}
+        </div>
       </div>
     </div>
   );
 }
+// password: Yup
+  //   .string('Enter your password')
+  //   .min(8, 'Password should be of minimum 8 characters length')
+  //   .required('Password is required'),
+  // confirm_password: Yup
+  //   .string()
+  //   .required()
+  //   .oneOf([Yup.ref('password'), null], 'Passwords must match'),
