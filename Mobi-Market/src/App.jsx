@@ -10,10 +10,8 @@ function App() {
   return (
     <div className="App">
       <div className="app__body">
-        
-            <SignUp/>
-            
-       
+          <SidebarBackground/>
+          <Login/>
       </div>
     </div>
   )

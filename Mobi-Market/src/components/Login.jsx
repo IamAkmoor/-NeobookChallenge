@@ -1,103 +1,133 @@
 import "../styles/Login.css";
-import { Input, TextField, FormControl, IconButton, InputLabel, InputAdornment, Alert } from "@mui/material";
-import React from "react";
-import axios from 'axios'
+import {
+  TextField,
+  IconButton,
+  InputAdornment,
+  Alert,
+  InputLabel,
+  Input,
+  FormControl,
+} from "@mui/material";
+import React, { useState } from "react";
+import { useFormik } from "formik";
+import axios from "axios";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 export default function Login() {
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [loginUser, setLoginUser] = React.useState({
-    username: '',
-    password: ''
-  })
-  const [isFormValid, setIsFormValid] = React.useState(false);
-  const [showErrorMess, setShowErrMess] = React.useState(false);
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showErrorMess, setShowErrMess] = useState(false);
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setLoginUser((prevUser) => ({
-      ...prevUser,
-      [name]: value
-    }));
-    updateFormValidity(name === 'username' ? value : loginUser.username, name === 'password' ? value : loginUser.password);
+  const handleClickShowPassword = () => {
+    console.log("work");
+    setShowPassword((show) => !show);
   };
 
-  const updateFormValidity = (newUsername, newPassword) => {
-    setIsFormValid(newUsername.trim() !== '' && newPassword.trim() !== '');
-  }
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setLoginUser((prevUser) => ({
+  //     ...prevUser,
+  //     [name]: value,
+  //   }));
+  //   updateFormValidity(
+  //     name === "username" ? value : loginUser.username,
+  //     name === "password" ? value : loginUser.password
+  //   );
+  // };
+
+  const isFormValid =
+    formik.values.username.trim() !== "" &&
+    formik.values.password.trim() !== "";
 
   const handleLogin = () => {
-    console.log(loginUser)
-    axios.post('https://neobook.online/mobi-market/users/login/', loginUser)
-    .then(response => console.log(response))
-    .catch(err => {
-      if(err.response){
-        console.error("server reponded with error status:", err.response.status);
-        if(err.response.status === 404) {
-          setShowErrMess(true)
+    console.log(loginUser);
+    axios
+      .post("https://neobook.online/mobi-market/users/login/", loginUser)
+      .then((response) => console.log(response))
+      .catch((err) => {
+        if (err.response) {
+          console.error(
+            "server reponded with error status:",
+            err.response.status
+          );
+          if (err.response.status === 404) {
+            setShowErrMess(true);
+          }
         }
-      }
-    })
-  }
+      });
+  };
 
   return (
-        <div className="login__container-form">
-          {showErrorMess &&
-            <div className="login__error">
-            <Alert variant="filled" severity="error" className="error-color">
-              Неверный логин или пароль
-            </Alert>
-          </div>
-          }
-          <FormControl variant="standard" className="login__form-input">
-            <TextField
-              id="standard-basic"
-              label="Имя пользователя"
-              variant="standard"
-              name="username"
-              value={loginUser.username}
-              onChange={handleInputChange}
-            />
-          </FormControl>
-          <FormControl variant="standard" className="login__form-input">
-            <InputLabel
-              htmlFor="standard-adornment-password"
-            >
+    <div className="right-container">
+      {showErrorMess && (
+        <div className="login__error">
+          <Alert variant="filled" severity="error" className="error-color">
+            Неверный логин или пароль
+          </Alert>
+        </div>
+      )}
+      <div className="container-content">
+        <form className="container-form" onSubmit={formik.handleSubmit}>
+          <TextField
+            className="form-container"
+            id="username"
+            label="Имя пользователя"
+            variant="standard"
+            name="username"
+            value={formik.values.username}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          <FormControl variant="standard">
+            <InputLabel htmlFor="standard-adornment-password">
               Пароль
             </InputLabel>
             <Input
               id="standard-adornment-password"
               name="password"
-              value={loginUser.password}
-              onChange={handleInputChange}
-              type={showPassword ? "text" : "password"}
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
                   >
-                    {showPassword ? <Visibility 
-                    sx={{ color:"#5458EA"}} /> :<VisibilityOff /> }
+                    {showPassword ? (
+                      <Visibility sx={{ color: "#5458EA" }} />
+                    ) : (
+                      <VisibilityOff />
+                    )}
                   </IconButton>
                 </InputAdornment>
               }
             />
-            <a href="#" className="login__link" >Забыли пароль</a>
+            <a href="#" className="login__link">
+              Забыли пароль
+            </a>
           </FormControl>
-          <button 
-            className={`login__input-button ${isFormValid ? 'login__button-valid' : 'login__button-invalid'}`}
+          <button
+            className={`submit-button ${
+              isFormValid ? "button-valid" : "button-invalid"
+            }`}
             disabled={!isFormValid}
-            onClick={handleLogin}
           >
             Войти
           </button>
-
-          <div className="login__signUp">
-            <a className="login__link" href="#">Зарегистрироваться</a>
-          </div>
-        </div>
+        </form>
+        {/* <div className="login__signUp">
+          <a className="login__link" href="#">
+            Зарегистрироваться
+          </a>
+        </div> */}
+      </div>
+    </div>
   );
 }
